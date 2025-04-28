@@ -1,0 +1,15 @@
+[package]
+name = "uacpi-sys"
+version = "0.1.0"
+edition = "2024"
+links = "uacpi"
+
+[dependencies]
+
+[build-dependencies]
+bindgen = "0.71.1"
+cc = "1.1.18"
+
+[features]
+reduced-hardware = []
+barebones-mode = []
