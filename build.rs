@@ -57,11 +57,9 @@ fn main() -> Result<(), Box<dyn Error>> {
         .flag("-fno-stack-protector")
         .flag("-mgeneral-regs-only")
         .flag("-nostdlib")
-        .flag("-ffreestanding");
-
-    if cfg!(target_arch = "x86_64") || cfg!(target_arch = "x86") {
-        cc.flag("-mno-red-zone");
-    }
+        .flag("-ffreestanding")
+        .flag("-mno-red-zone")
+        .flag("-mcmodel=kernel");
 
     if cfg!(feature = "reduced-hardware") {
         cc.define("UACPI_REDUCED_HARDWARE", "1");
