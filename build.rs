@@ -59,7 +59,9 @@ fn main() -> Result<(), Box<dyn Error>> {
         .flag("-nostdlib")
         .flag("-ffreestanding")
         .flag("-mno-red-zone")
-        .flag("-mcmodel=kernel");
+        .flag("-mcmodel=kernel")
+        .flag("-fno-PIC")
+        .flag("-fno-PIE");
 
     if cfg!(feature = "reduced-hardware") {
         cc.define("UACPI_REDUCED_HARDWARE", "1");
