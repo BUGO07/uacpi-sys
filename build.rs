@@ -54,15 +54,22 @@ fn main() -> Result<(), Box<dyn Error>> {
     cc.files(sources)
         .include(format!("{uacpi_path_str}/include"))
         .define("UACPI_SIZED_FREES", "1")
-        .flag("-fno-stack-protector")
         .flag("-mgeneral-regs-only")
         .flag("-nostdlib")
         .flag("-ffreestanding")
-        .flag("-mno-red-zone")
-        .flag("-mcmodel=kernel")
+        .flag("-fno-stack-protector")
         .flag("-fno-PIC")
         .flag("-fno-PIE");
 
+    let target = env::var("TARGET").unwrap();
+
+    if target.contains("x86_64") || target.contains("i686") {
+        cc.flag("-mno-red-zone").flag("-mcmodel=kernel");
+    }
+
+    if target.contains("aarch64") {
+        cc.compiler("aarch64-linux-gnu-gcc");
+    }
     if cfg!(feature = "reduced-hardware") {
         cc.define("UACPI_REDUCED_HARDWARE", "1");
     }
@@ -87,6 +94,8 @@ fn main() -> Result<(), Box<dyn Error>> {
         ])
         .prepend_enum_name(false)
         .use_core()
+        .derive_default(true)
+        .derive_debug(true)
         .generate()
         .expect("Unable to generate bindings");
 
