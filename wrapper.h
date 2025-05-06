@@ -5,3 +5,4 @@
 #include <uacpi/event.h>
 #include <uacpi/resources.h>
 #include <uacpi/utilities.h>
+#include <uacpi/notify.h>
