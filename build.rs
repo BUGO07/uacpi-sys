@@ -61,7 +61,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         .flag("-fno-PIC")
         .flag("-fno-PIE");
 
-    let target = env::var("TARGET").unwrap();
+    let target = env::var("CARGO_CFG_TARGET_ARCH").unwrap();
 
     if target.contains("x86_64") || target.contains("i686") {
         cc.flag("-mno-red-zone").flag("-mcmodel=kernel");

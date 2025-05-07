@@ -4,11 +4,9 @@ version = "0.1.0"
 edition = "2024"
 links = "uacpi"
 
-[dependencies]
-
 [build-dependencies]
 bindgen = "0.71.1"
-cc = "1.1.18"
+cc = "1.2.21"
 
 [features]
 reduced-hardware = []
