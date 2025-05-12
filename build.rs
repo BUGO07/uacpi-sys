@@ -34,6 +34,12 @@ fn init_submodule(uacpi_path: &Path) {
             .current_dir(uacpi_path)
             .status()
             .expect("failed to retrieve uACPI sources with git");
+    } else {
+        Command::new("git")
+            .args(["submodule", "update", "--remote"])
+            .current_dir(uacpi_path)
+            .status()
+            .expect("failed to retrieve uACPI sources with git");
     }
 }
 
