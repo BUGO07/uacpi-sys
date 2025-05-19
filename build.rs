@@ -57,7 +57,8 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let mut cc = cc::Build::new();
 
-    cc.files(sources)
+    cc.compiler("clang")
+        .files(sources)
         .include(format!("{uacpi_path_str}/include"))
         .define("UACPI_SIZED_FREES", "1")
         .flag("-mgeneral-regs-only")
@@ -73,9 +74,6 @@ fn main() -> Result<(), Box<dyn Error>> {
         cc.flag("-mno-red-zone").flag("-mcmodel=kernel");
     }
 
-    if target.contains("aarch64") {
-        cc.compiler("aarch64-linux-gnu-gcc");
-    }
     if cfg!(feature = "reduced-hardware") {
         cc.define("UACPI_REDUCED_HARDWARE", "1");
     }
