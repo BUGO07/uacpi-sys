@@ -61,7 +61,6 @@ fn main() -> Result<(), Box<dyn Error>> {
         .files(sources)
         .include(format!("{uacpi_path_str}/include"))
         .define("UACPI_SIZED_FREES", "1")
-        .flag("-mgeneral-regs-only")
         .flag("-nostdlib")
         .flag("-ffreestanding")
         .flag("-fno-stack-protector")
@@ -72,6 +71,10 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     if target.contains("x86_64") || target.contains("i686") {
         cc.flag("-mno-red-zone").flag("-mcmodel=kernel");
+    }
+
+    if !target.contains("riscv64") {
+        cc.flag("-mgeneral-regs-only");
     }
 
     if cfg!(feature = "reduced-hardware") {
