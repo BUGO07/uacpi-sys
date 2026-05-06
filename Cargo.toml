@@ -5,8 +5,8 @@ edition = "2024"
 links = "uacpi"
 
 [build-dependencies]
-bindgen = "0.71.1"
-cc = "1.2.22"
+bindgen = "0.72.1"
+cc = "1.2.61"
 
 [features]
 reduced-hardware = []

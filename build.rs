@@ -61,20 +61,18 @@ fn main() -> Result<(), Box<dyn Error>> {
         .files(sources)
         .include(format!("{uacpi_path_str}/include"))
         .define("UACPI_SIZED_FREES", "1")
+        .opt_level(3)
         .flag("-nostdlib")
         .flag("-ffreestanding")
         .flag("-fno-stack-protector")
         .flag("-fno-PIC")
-        .flag("-fno-PIE");
+        .flag("-fno-PIE")
+        .flag("-flto");
 
     let target = env::var("CARGO_CFG_TARGET_ARCH").unwrap();
 
     if target.contains("x86_64") || target.contains("i686") {
         cc.flag("-mno-red-zone").flag("-mcmodel=kernel");
-    }
-
-    if !target.contains("riscv64") {
-        cc.flag("-mgeneral-regs-only");
     }
 
     if cfg!(feature = "reduced-hardware") {
